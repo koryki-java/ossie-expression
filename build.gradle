@@ -1,0 +1,44 @@
+plugins {
+    alias(libs.plugins.antlr)
+    alias(libs.plugins.spotless)
+    id 'java-library'
+}
+
+description = 'The ossie expression grammar and the ANTLR lexer and parser generated from it.'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+dependencies {
+    antlr libs.antlr4
+    api(libs.antlr4.runtime)
+
+    testImplementation platform(libs.junit.bom)
+    testImplementation libs.junit.jupiter
+    testRuntimeOnly libs.junit.platform.launcher
+}
+
+configurations.named('api') {
+    setExtendsFrom(extendsFrom.findAll { it.name != 'antlr' })
+}
+
+tasks.named('generateGrammarSource', AntlrTask) {
+    arguments += ['-visitor', '-long-messages', '-Werror', '-package', 'ai.koryki.ossie']
+}
+
+sourceSets.main.resources.srcDir('src/main/antlr')
+
+tasks.named('test') {
+    useJUnitPlatform()
+    testLogging { exceptionFormat 'full' }
+}
+
+spotless {
+    java {
+        target 'src/**/*.java'
+        googleJavaFormat(libs.versions.google.java.format.get()).aosp()
+    }
+}

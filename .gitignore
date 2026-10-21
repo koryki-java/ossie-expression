@@ -1,0 +1,16 @@
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+.idea/
+*.iml
+out/
+.claud*
+.vscode/
+.DS_Store
+
+# ANTLR generated
+*.tokens
+*.interp
+**/gen/
+**/generated-src/
