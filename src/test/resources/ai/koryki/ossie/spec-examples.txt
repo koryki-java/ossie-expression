@@ -1,0 +1,108 @@
+# Copyright 2025-2026 Johannes Zemlin, licensed under the Apache License, Version 2.0.
+# One expression per line; lines starting with '#' are comments.
+# Examples from expression_language.md and constructed from its rules.
+SUM(amount)
+COUNT(*)
+COUNT(DISTINCT customer_id)
+SUM(DISTINCT amount)
+AVG(amount)
+STDDEV_POP(amount)
+PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY x)
+PERCENTILE_DISC(0.5) WITHIN GROUP (ORDER BY x DESC NULLS LAST)
+MEDIAN(amount)
+APPROX_COUNT_DISTINCT(customer_id)
+APPROX_PERCENTILE(response_time, 0.95)
+SUM(CASE WHEN status = 'completed' THEN amount END)
+COUNT(CASE WHEN status = 'completed' THEN 1 END)
+SUM(amount) FILTER (WHERE status = 'completed')
+COUNT(*) FILTER (WHERE status = 'completed')
+COUNT(DISTINCT customer_id) FILTER (WHERE status = 'completed')
+CURRENT_DATE
+CURRENT_DATE()
+CURRENT_TIMESTAMP
+CURRENT_TIMESTAMP()
+CURRENT_TIME()
+YEAR(order_date)
+DAYOFYEAR(order_date)
+EXTRACT(YEAR FROM date_expr)
+EXTRACT(MILLISECOND FROM ts)
+DATE_PART('month', date_expr)
+DATE_TRUNC('month', order_date)
+DATEADD(day, 7, order_date)
+DATEADD(month, -1, order_date)
+DATEDIFF(year, start_date, end_date)
+DATE '2024-01-15'
+TIMESTAMP_NTZ '2024-01-15 10:30:00'
+TIME '10:30:00'
+CAST('2024-01-15' AS DATE)
+CAST('2024-01-15 10:30:00' AS TIMESTAMP_NTZ)
+CAST(x AS DECIMAL(10, 2))
+CAST(x AS VARCHAR)
+TRY_CAST(x AS INTEGER)
+TO_DATE('15/01/2024', 'DD/MM/YYYY')
+TO_CHAR(order_date, 'YYYY-MM-DD HH24:MI:SS')
+CONCAT(a, b, c)
+first_name || ' ' || last_name
+LENGTH(str)
+LEFT(str, 3)
+RIGHT(str, 3)
+SUBSTRING(str, 2, 5)
+REPLACE(str, 'a', 'b')
+SPLIT_PART(str, ',', 2)
+POSITION('a' IN str)
+CHARINDEX('a', str)
+str LIKE 'a%'
+str NOT LIKE 'a%'
+str ILIKE '%b_'
+REGEXP_LIKE(str, '^a.*')
+ABS(x)
+ROUND(x, 2)
+CEIL(x)
+x % 2
+MOD(x, y)
+POWER(x, 2)
+LOG(10, x)
+PI()
+GREATEST(x, y, z)
+CASE WHEN a > 1 THEN 'x' WHEN a > 0 THEN 'y' ELSE 'z' END
+CASE expression WHEN 1 THEN 'one' WHEN 2 THEN 'two' ELSE 'many' END
+IF(condition, true_result, false_result)
+IFF(condition, 1, 2)
+NULLIF(a, b)
+COALESCE(a, b, c)
+NVL2(expr, 1, 2)
+ZEROIFNULL(expr)
+NOT expr
+a AND b OR NOT c
+NOT a = b
+x BETWEEN 1 AND 10 AND y NOT BETWEEN a AND b
+x IN (1, 2, 3)
+x NOT IN ('a', 'b')
+x IS NULL
+x IS NOT NULL
+a IS NOT DISTINCT FROM b
+a IS DISTINCT FROM b
+a <> b AND a != b AND a <= b AND a >= b
+-x + +y * (z - 1) / 2
+1.5e-3 + .5 + 10.
+TRUE AND NOT FALSE
+NULL
+"Order Date"
+"say ""hi"""
+dataset.field
+schema.dataset."Field"
+date
+first
+a -- trailing comment
+a + 1 /* inline */ + 2
+ROW_NUMBER() OVER (ORDER BY id)
+RANK() OVER (ORDER BY revenue DESC NULLS LAST)
+NTILE(4) OVER (PARTITION BY region ORDER BY revenue)
+LAG(expr, 1, 0) OVER (PARTITION BY a ORDER BY b)
+NTH_VALUE(expr, 2) OVER (ORDER BY b)
+SUM(amount) OVER (ORDER BY order_date)
+AVG(amount) OVER (ORDER BY order_date ROWS BETWEEN 6 PRECEDING AND CURRENT ROW)
+SUM(amount) OVER (ORDER BY d RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
+SUM(amount) OVER (ORDER BY d ROWS BETWEEN 1 PRECEDING AND 2 FOLLOWING)
+SUM(amount) OVER (PARTITION BY region)
+amount / SUM(amount) OVER () * 100

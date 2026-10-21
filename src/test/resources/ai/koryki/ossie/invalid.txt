@@ -1,0 +1,13 @@
+# Copyright 2025-2026 Johannes Zemlin, licensed under the Apache License, Version 2.0.
+# One expression per line; lines starting with '#' are comments.
+1 +
+SUM(
+(a
+a b
+CASE WHEN a THEN b
+x BETWEEN 1
+x IN ()
+SELECT a FROM t
+a IS
+'unterminated
+CAST(x AS)
